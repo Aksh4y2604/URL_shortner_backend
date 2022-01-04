@@ -1,0 +1,26 @@
+{
+  "name": "url_shortner_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aksh4y2604/URL_shortner_backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aksh4y2604/URL_shortner_backend/issues"
+  },
+  "homepage": "https://github.com/Aksh4y2604/URL_shortner_backend#readme",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.5",
+    "nodemon": "^2.0.15"
+  }
+}
