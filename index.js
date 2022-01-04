@@ -2,10 +2,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const URLs = require('./models/URLs');
+var bodyParser = require('body-parser')
+const cors = require('cors');
+// parse application/x-www-form-urlencoded
 
 
 //initialing the app 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+app.use(cors());
 const PORT = process.env.PORT || 8000;
 
 
@@ -24,13 +32,14 @@ app.get('/',(req, res, err)=>{
 
 
 //function that genreates random strings
-const genreateShortString = async ()=>{
+const genreateShortString = ()=>{
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
     for ( var i = 0; i < 6; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
+    //checks if the string is already in the database
     if (result ===  URLs.findOne({arg: result})){ 
         genreateShortString(); 
     }else{
@@ -40,10 +49,9 @@ const genreateShortString = async ()=>{
 
 //creating the short url and saving it to the database
 app.post('/create', async (req, res, err)=>{
-
-    var url = req.body.url;
+    console.log(req.body);
     var short_url = await genreateShortString(); 
-    var newURL = new URLs({
+    /* var newURL = new URLs({
         url: url,
         short_url: short_url
     });
@@ -53,7 +61,21 @@ app.post('/create', async (req, res, err)=>{
     })
     .catch(err=>{
         console.log(err);
+    }); */
+    try{
+        await URLs.create({
+            url: req.body.url,
+            short_url: short_url
+        })
+        var newURL = 'localhost:8000/'+short_url;
+    }
+    catch(err){
+        console.log(err);
+    }
+    res.send({
+        newURL
     });
+
 });
 
 
