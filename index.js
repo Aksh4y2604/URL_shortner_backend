@@ -67,7 +67,7 @@ app.post('/create', async (req, res, err)=>{
             url: req.body.url,
             short_url: short_url
         })
-        var newURL = 'http://localhost:8000/'+short_url;
+        var newURL = 'https://url-shortner26.herokuapp.com/'+short_url;
     }
     catch(err){
         console.log(err);
